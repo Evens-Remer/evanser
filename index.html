@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有趣的HTML示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #4682b4;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #696969;
+        }
+    </style>
+</head>
+<body>
+    <h1>欢迎来到有趣的HTML示例页面</h1>
+    <p>点击下面的按钮，看看会发生什么！</p>
+    <button onclick="showMessage()">点击我</button>
+    <p id="message"></p>
+    <p id="time"></p>
+
+    <script>
+        function showMessage() {
+            const messages = [
+                "你真是个好奇宝宝！",
+                "今天是个美好的一天！",
+                "继续探索吧，还有更多惊喜！",
+                "你会发现更多有趣的内容！"
+            ];
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            document.getElementById('message').innerText = messages[randomIndex];
+        }
+
+        function showTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('time').innerText = "当前时间是: " + timeString;
+        }
+
+        setInterval(showTime, 1000);
+    </script>
+</body>
+</html>
