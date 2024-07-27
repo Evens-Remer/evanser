@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>有趣的HTML</title>
+    <title>丰富功能的HTML</title>
     <style>
         h1 {
             background: linear-gradient(135deg, #0eaf6d, #ff6ac6 25%, #147b96 50%, #e6d205 55%, #2cc4e0 60%, #8b2ce0 80%, #ff6384 95%, #08dfb4);
@@ -20,9 +20,42 @@
         h1:hover {
             animation: flow 4s infinite linear;
         }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+        .button:hover {background-color: #3e8e41}
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
     </style>
 </head>
 <body>
-    <h1>有趣的HTML效果</h1>
+    <h1>丰富功能的HTML效果</h1>
+    <button class="button" onclick="alert('按钮被点击了！')">点击我</button>
+    <br><br>
+    <video width="320" height="240" controls>
+        <source src="movie.mp4" type="video/mp4">
+        您的浏览器不支持视频标签。
+    </video>
+    <br><br>
+    <audio controls>
+        <source src="audio.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    <br><br>
+    <iframe src="https://www.google.com/maps" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 </body>
 </html>
