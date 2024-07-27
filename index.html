@@ -1,55 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>有趣的HTML示例</title>
+    <title>有趣的HTML</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f8ff;
-        }
         h1 {
-            color: #4682b4;
+            background: linear-gradient(135deg, #0eaf6d, #ff6ac6 25%, #147b96 50%, #e6d205 55%, #2cc4e0 60%, #8b2ce0 80%, #ff6384 95%, #08dfb4);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: flow 12s infinite linear;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-top: 20px;
+        @keyframes flow {
+            0% { background-position: 0 0; }
+            100% { background-position: -400% 0; }
         }
-        p {
-            font-size: 18px;
-            color: #696969;
+        h1:hover {
+            animation: flow 4s infinite linear;
         }
     </style>
 </head>
 <body>
-    <h1>欢迎来到有趣的HTML示例页面</h1>
-    <p>点击下面的按钮，看看会发生什么！</p>
-    <button onclick="showMessage()">点击我</button>
-    <p id="message"></p>
-    <p id="time"></p>
-
-    <script>
-        function showMessage() {
-            const messages = [
-                "你真是个好奇宝宝！",
-                "今天是个美好的一天！",
-                "继续探索吧，还有更多惊喜！",
-                "你会发现更多有趣的内容！"
-            ];
-            const randomIndex = Math.floor(Math.random() * messages.length);
-            document.getElementById('message').innerText = messages[randomIndex];
-        }
-
-        function showTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            document.getElementById('time').innerText = "当前时间是: " + timeString;
-        }
-
-        setInterval(showTime, 1000);
-    </script>
+    <h1>有趣的HTML效果</h1>
 </body>
 </html>
