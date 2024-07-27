@@ -3,59 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>丰富功能的HTML</title>
+    <title>贪吃蛇游戏</title>
     <style>
-        h1 {
-            background: linear-gradient(135deg, #0eaf6d, #ff6ac6 25%, #147b96 50%, #e6d205 55%, #2cc4e0 60%, #8b2ce0 80%, #ff6384 95%, #08dfb4);
-            -webkit-text-fill-color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            background-size: 200% 100%;
-            animation: flow 12s infinite linear;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-        @keyframes flow {
-            0% { background-position: 0 0; }
-            100% { background-position: -400% 0; }
-        }
-        h1:hover {
-            animation: flow 4s infinite linear;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            outline: none;
-            color: #fff;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
-        }
-        .button:hover {background-color: #3e8e41}
-        .button:active {
-            background-color: #3e8e41;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
+        canvas {
+            background-color: #000;
         }
     </style>
 </head>
 <body>
-    <h1>丰富功能的HTML效果</h1>
-    <button class="button" onclick="alert('按钮被点击了！')">点击我</button>
-    <br><br>
-    <video width="320" height="240" controls>
-        <source src="movie.mp4" type="video/mp4">
-        您的浏览器不支持视频标签。
-    </video>
-    <br><br>
-    <audio controls>
-        <source src="audio.mp3" type="audio/mpeg">
-        您的浏览器不支持音频元素。
-    </audio>
-    <br><br>
-    <iframe src="https://www.google.com/maps" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const grid = 20;
+        let count = 0;
+        let snake = [{ x: 160, y: 160 }, { x: 140, y: 160 }, { x: 120, y: 160 }, { x: 100, y: 160 }];
+        let dx = grid;
+        let dy = 0;
+        let food = { x: 320, y: 320 };
+
+        function getRandomFood() {
+            let x = Math.floor(Math.random() * 20) * grid;
+            let y = Math.floor(Math.random() * 20) * grid;
+            return { x, y };
+        }
+
+        function drawSnake() {
+            snake.forEach(part => {
+                ctx.fillStyle = 'green';
+                ctx.fillRect(part.x, part.y, grid - 1, grid - 1);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(food.x, food.y, grid - 1, grid - 1);
+        }
+
+        function update() {
+            if (++count < 4) {
+                requestAnimationFrame(update);
+                return;
+            }
+            count = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawFood();
+            drawSnake();
+
+            let head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+            if (head.x === food.x && head.y === food.y) {
+                food = getRandomFood();
+            } else {
+                snake.pop();
+            }
+
+            snake.unshift(head);
+
+            if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height || snake.slice(1).some(part => part.x === head.x && part.y === head.y)) {
+                document.location.reload();
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft' && dx === 0) {
+                dx = -grid;
+                dy = 0;
+            } else if (e.key === 'ArrowUp' && dy === 0) {
+                dx = 0;
+                dy = -grid;
+            } else if (e.key === 'ArrowRight' && dx === 0) {
+                dx = grid;
+                dy = 0;
+            } else if (e.key === 'ArrowDown' && dy === 0) {
+                dx = 0;
+                dy = grid;
+            }
+        });
+
+        requestAnimationFrame(update);
+    </script>
 </body>
 </html>
