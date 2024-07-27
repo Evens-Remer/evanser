@@ -39,6 +39,10 @@
         .hidden {
             background-color: #333;
         }
+        .matched {
+            background-color: #00cc00;
+            cursor: default;
+        }
     </style>
 </head>
 <body>
@@ -76,7 +80,7 @@
         }
 
         function revealCard(card) {
-            if (lockBoard || card === firstCard || card.classList.contains('revealed')) return;
+            if (lockBoard || card === firstCard || card.classList.contains('revealed') || card.classList.contains('matched')) return;
 
             card.classList.remove('hidden');
             card.classList.add('revealed');
@@ -93,8 +97,10 @@
 
         function checkMatch() {
             if (firstCard.dataset.value === secondCard.dataset.value) {
-                firstCard = null;
-                secondCard = null;
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                firstCard.classList.remove('revealed');
+                secondCard.classList.remove('revealed');
                 matches++;
                 if (matches === cardValues.length / 2) {
                     document.getElementById('message').textContent = 'You win!';
@@ -104,9 +110,9 @@
                 secondCard.classList.add('hidden');
                 firstCard.textContent = '';
                 secondCard.textContent = '';
-                firstCard = null;
-                secondCard = null;
             }
+            firstCard = null;
+            secondCard = null;
             lockBoard = false;
         }
 
