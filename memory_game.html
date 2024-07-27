@@ -34,6 +34,7 @@
             color: white;
             cursor: pointer;
             border-radius: 5px;
+            user-select: none;
         }
         .hidden {
             background-color: #333;
@@ -47,11 +48,12 @@
     <button onclick="window.location.href='index.html'">Back to Game Hub</button>
 
     <script>
-        const cardValues = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D'];
+        const cardValues = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'];
         let cards = [];
         let firstCard = null;
         let secondCard = null;
         let matches = 0;
+        let lockBoard = false;
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -66,7 +68,7 @@
             cardValues.forEach(value => {
                 const card = document.createElement('div');
                 card.className = 'card hidden';
-                card.textContent = value;
+                card.dataset.value = value;
                 card.onclick = () => revealCard(card);
                 gameBoard.appendChild(card);
                 cards.push(card);
@@ -74,33 +76,38 @@
         }
 
         function revealCard(card) {
-            if (card === firstCard || card.classList.contains('revealed')) return;
+            if (lockBoard || card === firstCard || card.classList.contains('revealed')) return;
 
             card.classList.remove('hidden');
             card.classList.add('revealed');
+            card.textContent = card.dataset.value;
 
             if (!firstCard) {
                 firstCard = card;
-            } else if (!secondCard) {
+            } else {
                 secondCard = card;
+                lockBoard = true;
                 setTimeout(checkMatch, 1000);
             }
         }
 
         function checkMatch() {
-            if (firstCard.textContent === secondCard.textContent) {
-                matches++;
+            if (firstCard.dataset.value === secondCard.dataset.value) {
                 firstCard = null;
                 secondCard = null;
+                matches++;
                 if (matches === cardValues.length / 2) {
                     document.getElementById('message').textContent = 'You win!';
                 }
             } else {
                 firstCard.classList.add('hidden');
                 secondCard.classList.add('hidden');
+                firstCard.textContent = '';
+                secondCard.textContent = '';
                 firstCard = null;
                 secondCard = null;
             }
+            lockBoard = false;
         }
 
         createBoard();
